@@ -94,8 +94,8 @@ func main() {
 	
 	handler := cors.Default().Handler(r)
 	
-	log.Println("Server is listening on port 3002")
-	if err := http.ListenAndServe(":3002", handler); err != nil {
+	log.Println("Server is listening on port 3001")
+	if err := http.ListenAndServe(":3001", handler); err != nil {
 		log.Fatalf("Error starting server: %v", err)
 	}
 }
