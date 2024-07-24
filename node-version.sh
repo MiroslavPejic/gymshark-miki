@@ -1,8 +1,9 @@
 #!/bin/bash
 
 # Define paths and commands
-EXPRESS_APP_DIR="/home/mikipejic/Gymshark-miki/backend/node-api-server"
-REACT_APP_DIR="/home/mikipejic/Gymshark-miki/frontend"
+BASE_DIR=$(pwd)
+EXPRESS_APP_DIR="$BASE_DIR/backend/node-api-server"
+REACT_APP_DIR="$BASE_DIR/frontend"
 EXPRESS_PORT=3001
 
 start_express_server() {
