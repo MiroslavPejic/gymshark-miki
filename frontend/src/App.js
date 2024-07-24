@@ -1,55 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import HomePage from './HomePage';
+import PackSizesPage from './PackSizesPage';
 import './App.css';
-import axios from 'axios';
 
 function App() {
-  const [data, setData] = useState({});
-  const [inputValue, setInputValue] = useState('');
-
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
-
-  const calculatePackSizes = async () => {
-    try {
-      const response = await axios.post(
-        "http://localhost:3002/calculate-pack-sizes",
-        {
-          numOrdered: parseInt(inputValue, 10) || 0
-        }
-      );
-      setData(response.data.data.packs);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-
   return (
-    <div className="App">
-      <h1>Calculate Pack Sizes</h1>
-      <div>
-        <input
-          type="number"
-          value={inputValue}
-          onChange={handleInputChange}
-          placeholder="Enter order size"
-        />
-        <p>Order size: {inputValue}</p>
-      </div>
-      <button onClick={calculatePackSizes}>
-        Calculate
-      </button>
+    <Router>
+      <div className="App">
+        <nav>
+          <ul>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/calculate-pack-sizes">Order here</Link></li>
+          </ul>
+        </nav>
 
-      <div>
-        <ul>
-          {Object.entries(data).map(([packSize, count]) => (
-            <li key={packSize}>
-              {count} x {packSize}
-            </li>
-          ))}
-        </ul>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/calculate-pack-sizes" element={<PackSizesPage />} />
+        </Routes>
       </div>
-    </div>
+    </Router>
   );
 }
 
