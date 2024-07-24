@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
-
 import axios from 'axios';
 
 function App() {
@@ -13,36 +11,33 @@ function App() {
   };
 
   const calculatePackSizes = async () => {
-    console.log('inside this function');
-    await axios.post(
-      "http://localhost:3001/calculate-pack-sizes",
-      {
-        numOrdered: inputValue
-      }
-    )
-    .then(response => {
-      console.log('res: ', response);
+    try {
+      const response = await axios.post(
+        "http://localhost:3002/calculate-pack-sizes",
+        {
+          numOrdered: parseInt(inputValue, 10) || 0
+        }
+      );
       setData(response.data.data.packs);
-    })
-    .catch(error => {
-      console.log('Error: ', error);
-    });
-  }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   return (
     <div className="App">
+      <h1>Calculate Pack Sizes</h1>
       <div>
-        <h1>Input order size</h1>
         <input
-          type="text"
+          type="number"
           value={inputValue}
           onChange={handleInputChange}
+          placeholder="Enter order size"
         />
         <p>Order size: {inputValue}</p>
       </div>
-      <button 
-        onClick={calculatePackSizes}>
-        Click me!
+      <button onClick={calculatePackSizes}>
+        Calculate
       </button>
 
       <div>
